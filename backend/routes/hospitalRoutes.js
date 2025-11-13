@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { requireAuth, requireRole } from "../middleware/authMiddleware.js";
-import { createHospital, getHospitals, getHospitalById, updateHospital, deleteHospital } from "../controllers/hospitalController.js";
+import { createHospital, getHospitals, getHospitalById, updateHospital, deleteHospital, getMyHospitalProfile } from "../controllers/hospitalController.js";
 
 const router = Router();
 
 router.get("/", getHospitals);
+router.get("/me", requireAuth, getMyHospitalProfile);
 router.get("/:id", getHospitalById);
 router.post("/", requireAuth, requireRole(["hospital", "admin"]), createHospital);
 router.put("/:id", requireAuth, requireRole(["hospital", "admin"]), updateHospital);

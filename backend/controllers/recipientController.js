@@ -28,3 +28,16 @@ export async function deleteRecipient(req, res) {
   res.json({ message: "Recipient deleted" });
 }
 
+export async function getMyRecipientProfile(req, res) {
+  try {
+    const recipient = await Recipient.findOne({ user: req.user.id }).populate("user", "name email");
+    if (!recipient) {
+      return res.status(404).json({ message: "Recipient profile not found. Please create your recipient profile first." });
+    }
+    res.json(recipient);
+  } catch (error) {
+    console.error("Get my recipient profile error:", error);
+    res.status(500).json({ message: "Failed to retrieve recipient profile" });
+  }
+}
+

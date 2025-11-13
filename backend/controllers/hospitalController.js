@@ -28,3 +28,16 @@ export async function deleteHospital(req, res) {
   res.json({ message: "Hospital deleted" });
 }
 
+export async function getMyHospitalProfile(req, res) {
+  try {
+    const hospital = await Hospital.findOne({ managedBy: req.user.id });
+    if (!hospital) {
+      return res.status(404).json({ message: "Hospital profile not found. Please create your hospital profile first." });
+    }
+    res.json(hospital);
+  } catch (error) {
+    console.error("Get my hospital profile error:", error);
+    res.status(500).json({ message: "Failed to retrieve hospital profile" });
+  }
+}
+
