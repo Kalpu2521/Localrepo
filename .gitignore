@@ -1,2 +1,4 @@
 node_modules
 .env
+ENV_BLUEPRINT.md   
+CONNECTION_GUIDE.md
